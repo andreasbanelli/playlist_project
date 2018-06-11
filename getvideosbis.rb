@@ -89,14 +89,15 @@ file = File.read('res.json')
 
 data = JSON.parse(file)
 # # to get videoid
-# vuid = data["items"].map { |item| item["snippet"]["resourceId"]["videoId"] }
+vuid = data["items"].map { |item| item["snippet"]["resourceId"]["videoId"] }
+puts vuid
 
 
 # or to get title 
-vuid = data["items"].map { |item| item["snippet"]["title"]}
+vtit = data["items"].map { |item| item["snippet"]["title"]}
 
-vid = vuid.join(', ')
-puts vid
+vtitle = vuid.join(', ')
+puts vititle
   
 
   # Sample ruby code for videos.list, in order to get tags and categoryId for a specific video

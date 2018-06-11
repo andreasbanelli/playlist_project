@@ -58,7 +58,7 @@ service.authorization = authorize
 
 # Print response object as JSON
 def print_results(response)
-  puts response.to_json
+response.to_json
 end
 
 
@@ -67,27 +67,49 @@ end
 
 # Sample ruby code for playlistItems.list, in order to get all liked videos
 
-likedvideos = []
 next_page_token = ""
 
+
 def playlist_items_list_by_playlist_id(service, part, **params)
-    next_page_token = ""
+    # next_page_token = ""
 
     params = params.delete_if { |p, v| v == ''}
   response = service.list_playlist_items(part, params)
-    until next_page_token.nil?do
-        print_results(response)
-    end 
-    next_page_token = response.next_page_token
-    print response.next_page_token
-end
+    # until next_page_token.nil?do
+  # puts print_results(response)
+  return print_results(response)
+          
+          
+        
+    # end 
+    # next_page_token = response.next_page_token
+    # print response.next_page_token
 
+end
 
 
 getliked = playlist_items_list_by_playlist_id(
   service, 'snippet',
   max_results: 50,
   playlist_id: 'LLkyneo6XAv1no1jH33K2Bmg',
-    )
+    ) 
 
+puts getliked.class 
+  
+
+      
+    
+
+
+    data = JSON.parse(getliked)
+    # # to get videoid
+    vuid = data["items"].map { |item| item["snippet"]["resourceId"]["videoId"] } 
+    puts vuid
+
+
+    # or to get title 
+vtit = data["items"].map { |item| item["snippet"]["title"]}
+
+vtitle = vtit.join(', ')
+puts vtitle
 
